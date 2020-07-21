@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "171177049631",
+    "firebase_url": "https://whatskart.firebaseio.com",
+    "project_id": "whatskart",
+    "storage_bucket": "whatskart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171177049631:android:b0335be52b10a00220df2a",
+        "android_client_info": {
+          "package_name": "com.whatskart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171177049631-9mo2co4ron22v20a5m71q1cvri8qv7tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRQhAjLB8Ip1bcIXOq8RSYSC90FuQ1pCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171177049631-9mo2co4ron22v20a5m71q1cvri8qv7tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
