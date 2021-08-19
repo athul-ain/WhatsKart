@@ -81,9 +81,12 @@ class _HomePageState extends State<HomePage> {
                                 TextButton(
                                   onPressed: () {
                                     String url =
-                                        "https://api.whatsapp.com/send?phone=919895730558&text=";
-                                    canLaunch(url).then((value) => launch(url +
-                                        "Hi%0AI%20am%20intrested%20in%20setting%20up%20*WhatsKart*%20form%20my%20buisiness%0AWha%20is%20the%20pricing"));
+                                        "https://api.whatsapp.com/send?phone=91$SHOP_NUMBER&text=";
+                                    canLaunch(url).then(
+                                      (value) => launch(
+                                        "${url}Hi%0AI%20am%20intrested%20in%20setting%20up%20*WhatsKart*%20for%20my%20buisiness%0AWhat%20is%20the%20pricing",
+                                      ),
+                                    );
                                   },
                                   child: Text("Contact us"),
                                 )
@@ -223,7 +226,19 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ),
-                    SizedBox(height: 80)
+                    SizedBox(
+                      height: 80,
+                      child: Center(
+                        child: TextButton(
+                          style:
+                              TextButton.styleFrom(primary: Colors.orange[600]),
+                          onPressed: () async {
+                            await launch("https://athul.ain.one");
+                          },
+                          child: Text("Developed by athul.ain.one"),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

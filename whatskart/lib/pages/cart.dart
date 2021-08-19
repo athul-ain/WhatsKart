@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:whatskart/config.dart';
 import '../Services/ProductManager.dart';
 
 class CartPage extends StatefulWidget {
@@ -226,24 +227,18 @@ class _CartPageState extends State<CartPage> {
     double totalPrice = 0.0;
     String productsDetailText = "";
 
-    String url = "https://api.whatsapp.com/send?phone=919895730558&text=";
+    String url = "https://api.whatsapp.com/send?phone=91$SHOP_NUMBER&text=";
 
     val.productsInCartList.forEach((element) {
       int pcs = val.pcsOfItems(element);
       totalPrice = totalPrice + (pcs * element.sellingPrice);
-      productsDetailText = productsDetailText +
-          element.name +
-          "%20₹" +
-          element.sellingPrice.toString() +
-          "%20x%20$pcs" +
-          "%20%20%3A%20₹" +
-          (pcs * element.sellingPrice).toString() +
-          "%0A";
+      productsDetailText =
+          "$productsDetailText${element.name}%20₹${element.sellingPrice}%20x%20${pcs}Qty%3A%20*₹${pcs * element.sellingPrice}*%0A";
     });
 
     String typeOfOrder = "*New%20Order%20%3A*%20*(_TakeAway_)*%0A";
 
-    String totalPriceText = "*Total%20Payable%3A*%20₹$totalPrice%0A%0A";
+    String totalPriceText = "*Total%20Payable%3A%20₹$totalPrice*%0A%0A";
 
     String _address = "";
     for (var line in ls.convert(addressController.text)) {
