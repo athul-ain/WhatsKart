@@ -9,9 +9,7 @@ class ProductManager extends ChangeNotifier {
     int isOnceAdded =
         productsInCartCount.indexWhere((element) => element.id == item.id);
     if (isOnceAdded == -1) {
-      ProductCount pCount = new ProductCount();
-      pCount.id = item.id;
-      pCount.count = 1;
+      ProductCount pCount = ProductCount(id: item.id, count: 1);
 
       productsInCartList.add(item);
       productsInCartCount.add(pCount);
@@ -52,7 +50,7 @@ class ProductManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  int pcsOfItems(item) {
+  int? pcsOfItems(item) {
     int isOnceAdded =
         productsInCartCount.indexWhere((element) => element.id == item.id);
 
@@ -63,7 +61,7 @@ class ProductManager extends ChangeNotifier {
   double totalPayable() {
     double totalPrice = 0.0;
     productsInCartList.forEach((element) {
-      int pcs = pcsOfItems(element);
+      int pcs = pcsOfItems(element)!;
       totalPrice = totalPrice + (pcs * element.sellingPrice);
     });
     return totalPrice;

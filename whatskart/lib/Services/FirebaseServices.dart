@@ -1,17 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:whatskart/models/Product.dart';
+import '../config.dart';
 
 class FirebaseServices extends ChangeNotifier {
   Future<String> addProduct(Product product) async {
-    final products = Firestore.instance.collection('products');
-
-    var docRef = await products.add({
+    var docRef = await productCollectionREF.add({
       'name': product.name,
       'imageURL': product.imageURL,
       'listingPrice': product.listingPrice,
       'sellingPrice': product.sellingPrice,
     });
-    return docRef.documentID;
+    return docRef.id;
   }
 }
