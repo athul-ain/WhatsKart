@@ -2,22 +2,24 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../Services/ProductManager.dart';
-import '../models/Product.dart';
+import '../Services/product_manager.dart';
+import '../models/product.dart';
 import '../config.dart';
 import 'cart.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   bool contentLoading = true;
-  bool _displayBanner = true;
+  bool _displayBanner = !hidePromoBanner;
 
-  List<Product> products = [];
+  List<ProductModel> products = [];
 
   @override
   void initState() {
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         Map itemData = e.data() as Map;
         itemData["id"] = e.id;
 
-        return Product.fromMap(itemData);
+        return ProductModel.fromMap(itemData);
       }).toList();
 
       contentLoading = false;
@@ -48,14 +50,13 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(APP_NAME),
-        backgroundColor: Color.fromRGBO(0, 191, 165, 1),
+        title: const Text(appName),
         centerTitle: true,
       ),
       body: RefreshIndicator(
         onRefresh: getProductList,
         child: contentLoading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -65,10 +66,10 @@ class _HomePageState extends State<HomePage> {
                     _displayBanner
                         ? MaterialBanner(
                             backgroundColor: Colors.grey[100],
-                            leading: CircleAvatar(
+                            leading: const CircleAvatar(
                               child: Icon(Icons.local_offer),
                             ),
-                            content: Text(
+                            content: const Text(
                               "Need to set up WhatsKart for your Shop/Business?",
                             ),
                             actions: [
@@ -76,24 +77,24 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () {
                                     setState(() => _displayBanner = false);
                                   },
-                                  child: Text("hide"),
+                                  child: const Text("hide"),
                                 ),
                                 TextButton(
                                   onPressed: () {
                                     String url =
-                                        "https://api.whatsapp.com/send?phone=91$SHOP_NUMBER&text=";
+                                        "https://api.whatsapp.com/send?phone=919895730558&text=";
                                     canLaunch(url).then(
                                       (value) => launch(
                                         "${url}Hi%0AI%20am%20intrested%20in%20setting%20up%20*WhatsKart*%20for%20my%20buisiness%0AWhat%20is%20the%20pricing",
                                       ),
                                     );
                                   },
-                                  child: Text("Contact us"),
+                                  child: const Text("Contact us"),
                                 )
                               ])
                         : Container(),
                     GridView.count(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: _scrollController,
                       childAspectRatio: 0.7,
                       crossAxisCount: _screenWidth,
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                       children: List.generate(
                         products.length,
                         (i) {
-                          Product item = products[i];
+                          ProductModel item = products[i];
 
                           return Card(
                             clipBehavior: Clip.antiAlias,
@@ -133,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                                       children: <TextSpan>[
                                         TextSpan(
                                           text: "₹${item.listingPrice}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.grey,
                                             decoration:
                                                 TextDecoration.lineThrough,
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                                     ? Icons.shopping_cart
                                                     : Icons.add_shopping_cart),
                                               ),
-                                              Padding(
+                                              const Padding(
                                                 padding: EdgeInsets.all(3),
                                               ),
                                               _isOnceAdded
@@ -176,10 +177,9 @@ class _HomePageState extends State<HomePage> {
                                                         val.substractFromCart(
                                                             item);
                                                       },
-                                                      child: Padding(
+                                                      child: const Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
+                                                            EdgeInsets.all(5.0),
                                                         child: Icon(
                                                           Icons.remove_circle,
                                                         ),
@@ -198,10 +198,9 @@ class _HomePageState extends State<HomePage> {
                                                       onTap: () {
                                                         val.addToCart(item);
                                                       },
-                                                      child: Padding(
+                                                      child: const Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
+                                                            EdgeInsets.all(5.0),
                                                         child: Icon(
                                                           Icons.add_circle,
                                                         ),
@@ -232,10 +231,12 @@ class _HomePageState extends State<HomePage> {
                         child: TextButton(
                           style:
                               TextButton.styleFrom(primary: Colors.orange[600]),
-                          onPressed: () async {
-                            await launch("https://athul.ain.one");
-                          },
-                          child: Text("Developed by athul.ain.one"),
+                          onPressed: footerAttributeLink == null
+                              ? null
+                              : () async {
+                                  await launch(footerAttributeLink!);
+                                },
+                          child: const Text(footerAttribute),
                         ),
                       ),
                     )
@@ -247,11 +248,11 @@ class _HomePageState extends State<HomePage> {
         builder: (context, val, child) => Badge(
           animationType: BadgeAnimationType.scale,
           badgeContent: Text(val.productsInCartList.length.toString()),
-          showBadge: val.productsInCartList.length == 0 ? false : true,
+          showBadge: val.productsInCartList.isEmpty ? false : true,
           child: FloatingActionButton(
             onPressed: _openAddEntryDialog,
             tooltip: 'Cart',
-            child: Icon(Icons.shopping_cart),
+            child: const Icon(Icons.shopping_cart),
           ),
         ),
       ),
@@ -260,9 +261,9 @@ class _HomePageState extends State<HomePage> {
 
   void _openAddEntryDialog() {
     Navigator.of(context).push(
-      new MaterialPageRoute<Null>(
+      MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          return CartPage();
+          return const CartPage();
         },
         fullscreenDialog: true,
       ),

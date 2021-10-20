@@ -1,13 +1,13 @@
 import 'dart:developer';
 
-class Product {
+class ProductModel {
   late String id;
   late String name;
   late double listingPrice;
   late double sellingPrice;
   late String imageURL;
 
-  Product({
+  ProductModel({
     required String id,
     required String name,
     required double listingPrice,
@@ -15,7 +15,7 @@ class Product {
     required String imageURL,
   });
 
-  Product.fromMap(Map thisData) {
+  ProductModel.fromMap(Map thisData) {
     log(thisData.toString());
     name = thisData['name'];
     imageURL = thisData['imageURL'];
@@ -25,9 +25,9 @@ class Product {
   }
 }
 
-class ProductCount {
+class ProductCountModel {
   int count;
   String id;
 
-  ProductCount({required this.count, required this.id});
+  ProductCountModel({required this.count, required this.id});
 }

@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatskart/config.dart';
-import '../Services/ProductManager.dart';
+import '../Services/product_manager.dart';
 
 class CartPage extends StatefulWidget {
+  const CartPage({Key? key}) : super(key: key);
+
   @override
   _CartPageState createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final mobileNumberController = TextEditingController();
 
-  LineSplitter ls = new LineSplitter();
+  LineSplitter ls = const LineSplitter();
 
   @override
   void dispose() {
@@ -33,14 +35,11 @@ class _CartPageState extends State<CartPage> {
       builder: (context, val, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text("Check out"),
-            backgroundColor: Color.fromRGBO(0, 191, 165, 1),
+            title: const Text("Check out"),
           ),
-          body: val.productsInCartCount.length == 0
-              ? Container(
-                  child: Center(
-                    child: Text("Your Cart is empty"),
-                  ),
+          body: val.productsInCartCount.isEmpty
+              ? const Center(
+                  child: Text("Your Cart is empty"),
                 )
               : ListView(
                   controller: _scrollController,
@@ -48,7 +47,7 @@ class _CartPageState extends State<CartPage> {
                     ListView.builder(
                       shrinkWrap: true,
                       reverse: true,
-                      physics: ScrollPhysics(),
+                      physics: const ScrollPhysics(),
                       itemCount: val.productsInCartCount.length,
                       itemBuilder: (context, i) {
                         return ListTile(
@@ -71,8 +70,8 @@ class _CartPageState extends State<CartPage> {
                                   val.substractFromCart(
                                       val.productsInCartList[i]);
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
                                   child: Icon(
                                     Icons.remove_circle,
                                   ),
@@ -85,8 +84,8 @@ class _CartPageState extends State<CartPage> {
                                 onTap: () {
                                   val.addToCart(val.productsInCartList[i]);
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
                                   child: Icon(
                                     Icons.add_circle,
                                   ),
@@ -94,7 +93,7 @@ class _CartPageState extends State<CartPage> {
                               ),
                               Text(
                                 "= ₹${val.pcsOfItems(val.productsInCartList[i])! * val.productsInCartList[i].sellingPrice}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -104,7 +103,7 @@ class _CartPageState extends State<CartPage> {
                           trailing: _screenWidth < 335
                               ? null
                               : IconButton(
-                                  icon: Icon(Icons.delete),
+                                  icon: const Icon(Icons.delete),
                                   onPressed: () {
                                     val.removeFromCart(
                                         val.productsInCartList[i]);
@@ -130,14 +129,14 @@ class _CartPageState extends State<CartPage> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          Padding(padding: EdgeInsets.all(5)),
+                          const Padding(padding: EdgeInsets.all(5)),
                           Container(
-                            padding: EdgeInsets.all(7),
+                            padding: const EdgeInsets.all(7),
                             width: 353,
                             child: TextFormField(
                               controller: nameController,
                               textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "Enter your Name *",
                                 border: OutlineInputBorder(),
                               ),
@@ -153,13 +152,13 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(7),
+                            padding: const EdgeInsets.all(7),
                             width: 353,
                             child: TextFormField(
                               controller: mobileNumberController,
                               maxLength: 10,
                               textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "Enter your Mobile Number *",
                                 prefixText: "+91 ",
                                 border: OutlineInputBorder(),
@@ -176,14 +175,14 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(7),
+                            padding: const EdgeInsets.all(7),
                             width: 353,
                             child: TextFormField(
                               controller: addressController,
                               minLines: 2,
                               maxLines: 5,
                               textInputAction: TextInputAction.newline,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "Enter your Address *",
                                 border: OutlineInputBorder(),
                               ),
@@ -201,10 +200,10 @@ class _CartPageState extends State<CartPage> {
                         ],
                       ),
                     ),
-                    Padding(padding: EdgeInsets.all(50))
+                    const Padding(padding: EdgeInsets.all(50))
                   ],
                 ),
-          floatingActionButton: val.productsInCartCount.length == 0
+          floatingActionButton: val.productsInCartCount.isEmpty
               ? Container()
               : FloatingActionButton.extended(
                   onPressed: () {
@@ -215,8 +214,8 @@ class _CartPageState extends State<CartPage> {
                           .jumpTo(_scrollController.position.maxScrollExtent);
                     }
                   },
-                  icon: Icon(Icons.check),
-                  label: Text("Checkout"),
+                  icon: const Icon(Icons.check),
+                  label: const Text("Checkout"),
                 ),
         );
       },
@@ -227,7 +226,7 @@ class _CartPageState extends State<CartPage> {
     double totalPrice = 0.0;
     String productsDetailText = "";
 
-    String url = "https://api.whatsapp.com/send?phone=91$SHOP_NUMBER&text=";
+    String url = "https://api.whatsapp.com/send?phone=$shopNumber&text=";
 
     val.productsInCartList.forEach((element) {
       int pcs = val.pcsOfItems(element);
