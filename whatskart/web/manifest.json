@@ -1,11 +1,11 @@
 {
-    "name": "WhatsKart",
-    "short_name": "WhatsKart",
+    "name": "Bootland",
+    "short_name": "Bootland",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#00bfa5",
-    "theme_color": "#00bfa5",
-    "description": "A WhatsApp based shoping Website",
+    "background_color": "#795548",
+    "theme_color": "#795548",
+    "description": "Bootland WhatsApp Shopping",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

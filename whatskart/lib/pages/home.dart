@@ -153,8 +153,8 @@ class _HomePageState extends State<HomePage> {
                                     return FractionallySizedBox(
                                       widthFactor: 1,
                                       child: InkWell(
-                                        hoverColor: Colors.green[100],
-                                        splashColor: Colors.green[300],
+                                        hoverColor: primaryColor[100],
+                                        splashColor: primaryColor[300],
                                         child: Padding(
                                           padding: const EdgeInsets.all(3.0),
                                           child: Row(

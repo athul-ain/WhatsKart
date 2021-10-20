@@ -178,7 +178,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       },
                     ),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text(loading ? "..." : "Add Product"),
                     onPressed: loading
                         ? () {}

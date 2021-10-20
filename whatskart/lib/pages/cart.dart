@@ -235,7 +235,7 @@ class _CartPageState extends State<CartPage> {
           "$productsDetailText${element.name}%20₹${element.sellingPrice}%20x%20${pcs}Qty%3A%20*₹${pcs * element.sellingPrice}*%0A";
     });
 
-    String typeOfOrder = "*New%20Order%20%3A*%20*(_TakeAway_)*%0A";
+    String typeOfOrder = "*New%20Order%20%3A*%20*(_${orderType}_)*%0A";
 
     String totalPriceText = "*Total%20Payable%3A%20₹$totalPrice*%0A%0A";
 

@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
-              RaisedButton(
+              ElevatedButton(
                 child: Text(loading ? "..." : "Login"),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
