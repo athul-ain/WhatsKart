@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import '../models/Product.dart';
+import '../models/product.dart';
 
 class ProductManager extends ChangeNotifier {
-  List<Product> productsInCartList = [];
-  List<ProductCount> productsInCartCount = [];
+  List<ProductModel> productsInCartList = [];
+  List<ProductCountModel> productsInCartCount = [];
 
-  addToCart(Product item) {
+  addToCart(ProductModel item) {
     int isOnceAdded =
         productsInCartCount.indexWhere((element) => element.id == item.id);
     if (isOnceAdded == -1) {
-      ProductCount pCount = ProductCount(id: item.id, count: 1);
+      ProductCountModel pCount = ProductCountModel(id: item.id, count: 1);
 
       productsInCartList.add(item);
       productsInCartCount.add(pCount);
@@ -60,10 +60,10 @@ class ProductManager extends ChangeNotifier {
 
   double totalPayable() {
     double totalPrice = 0.0;
-    productsInCartList.forEach((element) {
+    for (var element in productsInCartList) {
       int pcs = pcsOfItems(element)!;
       totalPrice = totalPrice + (pcs * element.sellingPrice);
-    });
+    }
     return totalPrice;
   }
 }
