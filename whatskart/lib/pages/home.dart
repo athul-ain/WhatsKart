@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ScrollController _scrollController = ScrollController();
   bool contentLoading = true;
-  bool _displayBanner = true;
+  bool _displayBanner = false;
 
   List<Product> products = [];
 
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(APP_NAME),
-        backgroundColor: Color.fromRGBO(0, 191, 165, 1),
+        //backgroundColor: Color.fromRGBO(0, 191, 165, 1),
         centerTitle: true,
       ),
       body: RefreshIndicator(
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                                 TextButton(
                                   onPressed: () {
                                     String url =
-                                        "https://api.whatsapp.com/send?phone=91$SHOP_NUMBER&text=";
+                                        "https://api.whatsapp.com/send?phone=$SHOP_NUMBER&text=";
                                     canLaunch(url).then(
                                       (value) => launch(
                                         "${url}Hi%0AI%20am%20intrested%20in%20setting%20up%20*WhatsKart*%20for%20my%20buisiness%0AWhat%20is%20the%20pricing",
@@ -226,19 +226,6 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 80,
-                      child: Center(
-                        child: TextButton(
-                          style:
-                              TextButton.styleFrom(primary: Colors.orange[600]),
-                          onPressed: () async {
-                            await launch("https://athul.ain.one");
-                          },
-                          child: Text("Developed by athul.ain.one"),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),

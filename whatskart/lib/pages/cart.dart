@@ -34,7 +34,7 @@ class _CartPageState extends State<CartPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text("Check out"),
-            backgroundColor: Color.fromRGBO(0, 191, 165, 1),
+            //backgroundColor: Color.fromRGBO(0, 191, 165, 1),
           ),
           body: val.productsInCartCount.length == 0
               ? Container(
@@ -157,18 +157,17 @@ class _CartPageState extends State<CartPage> {
                             width: 353,
                             child: TextFormField(
                               controller: mobileNumberController,
-                              maxLength: 10,
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                 labelText: "Enter your Mobile Number *",
-                                prefixText: "+91 ",
+                                prefixText: "+971 ",
                                 border: OutlineInputBorder(),
                               ),
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'mobile number cannot be empty';
-                                } else if (value.length != 10) {
+                                } else if (value.length < 6) {
                                   return 'Please enter a valid mobile number';
                                 }
                                 return null;
@@ -227,7 +226,7 @@ class _CartPageState extends State<CartPage> {
     double totalPrice = 0.0;
     String productsDetailText = "";
 
-    String url = "https://api.whatsapp.com/send?phone=91$SHOP_NUMBER&text=";
+    String url = "https://api.whatsapp.com/send?phone=$SHOP_NUMBER&text=";
 
     val.productsInCartList.forEach((element) {
       int pcs = val.pcsOfItems(element);
@@ -245,7 +244,7 @@ class _CartPageState extends State<CartPage> {
       _address = _address + line + "%0A";
     }
     String addressText =
-        "*_Address%3A_*%0A${nameController.text}%0A$_address${mobileNumberController.text}%0A";
+        "*_Address%3A_*%0A${nameController.text}%0A$_address${mobileNumberController.text.trim()}%0A";
 
     // String promotionalText =
     //     "%0A%0A%0AHello%20I%20need%20to%20build%20a%20website%20like%20this%2C%20What%27s%20the%20Pricing";
